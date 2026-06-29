@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    container_name: bitagil-web
+    ports:
+      - "80:80"
+    restart: unless-stopped
