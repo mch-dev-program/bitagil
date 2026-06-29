@@ -48,16 +48,29 @@ function ProjectCard({ project, index }) {
           {project.result}
         </div>
 
-        <div className="flex flex-wrap gap-1.5">
-          {project.tech.map(t => (
-            <span
-              key={t}
-              className="font-mono text-[11px] px-2 py-1 rounded-md border"
-              style={{ color: '#6B7DA8', borderColor: 'rgba(61,75,107,0.4)' }}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap gap-1.5">
+            {project.tech.map(t => (
+              <span
+                key={t}
+                className="font-mono text-[11px] px-2 py-1 rounded-md border"
+                style={{ color: '#6B7DA8', borderColor: 'rgba(61,75,107,0.4)' }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[11px] shrink-0 transition-colors duration-200"
+              style={{ color: project.color }}
             >
-              {t}
-            </span>
-          ))}
+              Ver proyecto →
+            </a>
+          )}
         </div>
       </div>
     </motion.article>

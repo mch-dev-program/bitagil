@@ -117,6 +117,7 @@ export const PROJECTS = [
     tech: ['React', 'Node.js', 'PostgreSQL'],
     result: '+280% leads mensuales',
     color: '#4F6EF7',
+    url: 'https://www.trivanzapropertiesrd.com.do',
   },
   {
     title: 'MercadoRápido',

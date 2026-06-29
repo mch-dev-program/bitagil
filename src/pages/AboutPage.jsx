@@ -5,19 +5,19 @@ import Button from '../components/ui/Button'
 
 const VALUES = [
   {
-    tag: 'EJECUCIÓN',
-    title: 'Directo al grano',
-    desc: 'Sin reuniones innecesarias, sin promesas vagas. Acordamos un scope claro, lo ejecutamos y lo entregamos. El respeto por tu tiempo es parte del servicio.',
+    tag: 'SIN INTERMEDIARIOS',
+    title: 'Todo interno',
+    desc: 'El dev que escribe el código es el mismo que configura el servidor y revisa las métricas de la campaña. No subcontratamos, no delegamos a freelancers, no perdemos contexto entre equipos.',
   },
   {
-    tag: 'PROFUNDIDAD',
-    title: 'Técnico de verdad',
-    desc: 'No somos una agencia de marketing que subcontrata el código, ni un dev shop que ignora el posicionamiento. Hacemos todo internamente y lo hacemos bien.',
+    tag: 'STACK COMPLETO',
+    title: 'Del backend al ad spend',
+    desc: 'React, Node.js, PostgreSQL, Docker, Nginx, Google Ads, Meta Ads. No somos una agencia de marketing que llama a un dev cuando algo se rompe. Somos el dev, el sysadmin y el estratega en un solo equipo.',
   },
   {
-    tag: 'IMPACTO',
-    title: 'Resultados que se miden',
-    desc: 'Nos miden por los números que mueven tu negocio: leads, uptime, conversión, tráfico orgánico. No por vanity metrics ni reportes con muchos colores.',
+    tag: 'ORIENTADO A RESULTADOS',
+    title: 'Números, no reportes',
+    desc: 'Trivanza Properties: +280% leads. MercadoRápido: primera venta a las 48h del lanzamiento. CloudStack: 99.97% uptime sostenido. Eso es lo que nos importa medir. No las impresiones ni el engagement rate.',
   },
 ]
 
@@ -49,12 +49,14 @@ export default function AboutPage() {
             {...fadeUp(0.1)}
             className="font-display font-bold text-4xl sm:text-5xl lg:text-[4rem] leading-[1.06] tracking-tight max-w-3xl mb-6"
           >
-            Hacemos que las ideas<br />
-            digitales se vuelvan <span className="text-primary">reales.</span>
+            Escribimos el código,<br />
+            corremos las campañas<br />
+            y administramos<br />
+            <span className="text-primary">los servidores.</span>
           </motion.h1>
           <motion.p {...fadeUp(0.2)} className="text-base sm:text-lg leading-relaxed max-w-xl" style={{ color: '#6B7DA8' }}>
-            BitAgil nació de la frustración de ver clientes pagando a tres agencias distintas
-            para hacer lo que un solo equipo bien armado puede ejecutar mejor, más rápido y con más coherencia.
+            Sin subcontratar, sin agencias intermediarias, sin que el dev no sepa qué está pasando en marketing.
+            Un equipo que entiende el negocio completo.
           </motion.p>
         </div>
       </section>
@@ -73,41 +75,38 @@ export default function AboutPage() {
                 // por qué existimos
               </span>
               <h2 className="font-display font-bold text-3xl sm:text-4xl leading-tight mb-6">
-                Un solo equipo.<br />
+                Una sola factura.<br />
                 <span style={{ color: '#3D4B6B' }}>Todo el stack.</span>
               </h2>
               <div className="space-y-4 text-sm leading-relaxed" style={{ color: '#6B7DA8' }}>
                 <p>
-                  La mayoría de las empresas digitales tienen el mismo problema: el dev no habla con el de marketing,
-                  el de marketing no entiende los servidores, y los servidores los administra alguien que nunca vio el producto.
+                  La mayoría de las empresas que nos llegan venían pagando a una agencia de diseño,
+                  a un freelancer de desarrollo y a otra agencia de marketing. Tres presupuestos,
+                  tres reuniones de coordinación, tres versiones distintas del mismo problema.
                 </p>
                 <p>
-                  Nosotros rompemos esa dinámica. Desarrollo, marketing, infraestructura y SaaS bajo un mismo criterio técnico,
-                  con visibilidad total de cada pieza del sistema.
+                  BitAgil existe para eliminar esa fricción. Tomamos el brief, construimos el producto,
+                  lo desplegamos en infraestructura que administramos nosotros mismos y lo posicionamos
+                  con campañas que medimos en tiempo real.
                 </p>
                 <p>
-                  El resultado es simple: proyectos que se lanzan en tiempo, sistemas que no se caen y campañas que tienen
-                  tracking correcto desde el día uno.
+                  El resultado: <span className="text-text">Trivanza Properties</span> lanzada en 10 semanas con +280% de leads mensuales.
+                  <span className="text-text"> MercadoRápido</span> con su primera venta a las 48 horas del lanzamiento.
+                  <span className="text-text"> CloudStack Latam</span> con 99.97% de uptime después de una migración que nadie más
+                  quería tocar.
                 </p>
               </div>
             </motion.div>
 
-            {/* Stats block */}
-            <motion.div
-              {...fadeUp(0.15)}
-              className="grid grid-cols-2 gap-4"
-            >
+            {/* Stats */}
+            <motion.div {...fadeUp(0.15)} className="grid grid-cols-2 gap-4">
               {[
                 { value: '30+', label: 'Proyectos entregados' },
                 { value: '4 años', label: 'En operación' },
                 { value: '99.97%', label: 'Uptime sostenido' },
                 { value: '< 24h', label: 'Tiempo de respuesta' },
               ].map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="rounded-xl p-5 border border-muted/20"
-                  style={{ backgroundColor: '#0D1528' }}
-                >
+                <div key={label} className="rounded-xl p-5 border border-muted/20" style={{ backgroundColor: '#0D1528' }}>
                   <div className="font-display font-bold text-2xl text-text mb-1">{value}</div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: 'rgba(61,75,107,0.7)' }}>
                     {label}
@@ -127,8 +126,8 @@ export default function AboutPage() {
               // cómo operamos
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl leading-tight">
-              Tres principios que<br />
-              <span style={{ color: '#3D4B6B' }}>no negociamos.</span>
+              Lo que nos diferencia<br />
+              <span style={{ color: '#3D4B6B' }}>no es el pitch.</span>
             </h2>
           </motion.div>
 
@@ -164,11 +163,11 @@ export default function AboutPage() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center relative">
           <motion.div {...fadeUp(0)}>
             <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight mb-5">
-              ¿Querés trabajar<br />
-              <span className="text-primary">con nosotros?</span>
+              ¿Tu proyecto es el<br />
+              <span className="text-primary">próximo en la lista?</span>
             </h2>
-            <p className="text-sm sm:text-base mb-8" style={{ color: '#6B7DA8' }}>
-              Contanos tu proyecto. Respondemos en menos de 24 horas.
+            <p className="text-sm sm:text-base mb-8 max-w-sm mx-auto leading-relaxed" style={{ color: '#6B7DA8' }}>
+              Contanos qué necesitás. Sin formularios eternos, sin esperar una semana para una respuesta.
             </p>
             <Button href="/contacto" variant="accent" size="lg">
               Empezar proyecto
