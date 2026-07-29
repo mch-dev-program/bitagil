@@ -1,7 +1,47 @@
 services:
+  db:
+    image: postgres:16-alpine
+    container_name: bitagil-db
+    environment:
+      POSTGRES_DB: bitagil
+      POSTGRES_USER: bitagil
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - bitagil_pgdata:/var/lib/postgresql/data
+      - ./api/src/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  api:
+    build: ./api
+    container_name: bitagil-api
+    environment:
+      DB_HOST: db
+      DB_NAME: bitagil
+      DB_USER: bitagil
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      API_URL: ${API_URL}
+      PORT: 3001
+    ports:
+      - "3004:3001"
+    volumes:
+      - bitagil_uploads:/app/uploads
+    depends_on:
+      - db
+    restart: unless-stopped
+
   web:
-    build: .
+    build:
+      context: .
+      args:
+        VITE_API_URL: ${API_URL}
     container_name: bitagil-web
     ports:
-      - "80:80"
+      - "8082:80"
+    depends_on:
+      - api
     restart: unless-stopped
+
+volumes:
+  bitagil_pgdata:
+  bitagil_uploads:

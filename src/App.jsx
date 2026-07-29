@@ -11,6 +11,9 @@ import ServicesPage from './pages/ServicesPage'
 import PortfolioPage from './pages/PortfolioPage'
 import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminProjects from './pages/admin/AdminProjects'
+import { Navigate } from 'react-router-dom'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -32,15 +35,31 @@ export default function App() {
   return (
     <BrowserRouter>
       <ErrorBoundary>
-        <ScrollToTop />
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-1">
-            <AnimatedRoutes />
-          </main>
-          <Footer />
-        </div>
-        <BackToTop />
+        <Routes>
+          {/* Admin routes — own layout, no public Navbar/Footer */}
+          <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Navigate to="/admin/proyectos" replace />} />
+              <Route path="proyectos" element={<AdminProjects />} />
+            </Route>
+
+          {/* Public routes */}
+          <Route
+            path="*"
+            element={
+              <>
+                <ScrollToTop />
+                <div className="min-h-screen flex flex-col">
+                  <Navbar />
+                  <main className="flex-1">
+                    <AnimatedRoutes />
+                  </main>
+                  <Footer />
+                </div>
+                <BackToTop />
+              </>
+            }
+          />
+        </Routes>
       </ErrorBoundary>
     </BrowserRouter>
   )

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { PROJECTS } from '../../lib/constants'
+import { useProjects } from '../../hooks/useProjects'
 
 function ProjectCard({ project, index }) {
   return (
@@ -12,8 +12,19 @@ function ProjectCard({ project, index }) {
       className="group relative rounded-xl overflow-hidden border cursor-default flex flex-col"
       style={{ backgroundColor: '#0D1528', borderColor: 'rgba(61,75,107,0.3)' }}
     >
-      {/* Color accent bar */}
-      <div className="h-[3px] shrink-0" style={{ backgroundColor: project.color }} />
+      {/* Project image */}
+      {project.image_url ? (
+        <div className="relative h-44 overflow-hidden shrink-0">
+          <img
+            src={project.image_url}
+            alt={project.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 40%, rgba(13,21,40,0.9) 100%)' }} />
+        </div>
+      ) : (
+        <div className="h-[3px] shrink-0" style={{ backgroundColor: project.color }} />
+      )}
 
       {/* Hover border glow */}
       <div
@@ -36,21 +47,22 @@ function ProjectCard({ project, index }) {
           {project.description}
         </p>
 
-        {/* Result metric */}
-        <div
-          className="font-display font-bold text-sm mb-4 px-3 py-2 rounded-lg inline-block self-start"
-          style={{
-            color: project.color,
-            backgroundColor: `${project.color}12`,
-            border: `1px solid ${project.color}30`,
-          }}
-        >
-          {project.result}
-        </div>
+        {project.result && (
+          <div
+            className="font-display font-bold text-sm mb-4 px-3 py-2 rounded-lg inline-block self-start"
+            style={{
+              color: project.color,
+              backgroundColor: `${project.color}12`,
+              border: `1px solid ${project.color}30`,
+            }}
+          >
+            {project.result}
+          </div>
+        )}
 
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap gap-1.5">
-            {project.tech.map(t => (
+            {(project.tech || []).map(t => (
               <span
                 key={t}
                 className="font-mono text-[11px] px-2 py-1 rounded-md border"
@@ -78,6 +90,8 @@ function ProjectCard({ project, index }) {
 }
 
 export default function PortfolioSection() {
+  const { projects, loading } = useProjects()
+
   return (
     <section id="portfolio" className="py-16 sm:py-24 lg:py-36 relative">
       <div
@@ -102,11 +116,21 @@ export default function PortfolioSection() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {PROJECTS.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
-          ))}
-        </div>
+        {loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {[0, 1, 2].map(i => (
+              <div key={i} className="rounded-xl border h-72 animate-pulse" style={{ backgroundColor: '#0D1528', borderColor: 'rgba(61,75,107,0.2)' }} />
+            ))}
+          </div>
+        )}
+
+        {!loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {projects.map((project, index) => (
+              <ProjectCard key={project.id || project.title} project={project} index={index} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
