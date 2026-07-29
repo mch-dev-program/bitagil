@@ -28,37 +28,53 @@ const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
 
 // ── Projects ──────────────────────────────────────────────────────
 app.get('/api/projects', async (req, res) => {
-  const { rows } = await pool.query(
-    'SELECT * FROM projects ORDER BY order_index ASC, created_at ASC'
-  )
-  res.json(rows)
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM projects ORDER BY order_index ASC, created_at ASC'
+    )
+    res.json(rows)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 app.post('/api/projects', async (req, res) => {
-  const { title, category, description, tech, result, color, url, image_url, order_index } = req.body
-  const { rows } = await pool.query(
-    `INSERT INTO projects (title, category, description, tech, result, color, url, image_url, order_index)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
-    [title, category, description, tech || [], result, color, url, image_url, order_index || 0]
-  )
-  res.status(201).json(rows[0])
+  try {
+    const { title, category, description, tech, result, color, url, image_url, order_index } = req.body
+    const { rows } = await pool.query(
+      `INSERT INTO projects (title, category, description, tech, result, color, url, image_url, order_index)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
+      [title, category, description, tech || [], result, color, url, image_url, order_index || 0]
+    )
+    res.status(201).json(rows[0])
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 app.put('/api/projects/:id', async (req, res) => {
-  const { id } = req.params
-  const { title, category, description, tech, result, color, url, image_url, order_index } = req.body
-  const { rows } = await pool.query(
-    `UPDATE projects SET title=$1, category=$2, description=$3, tech=$4, result=$5,
-     color=$6, url=$7, image_url=$8, order_index=$9 WHERE id=$10 RETURNING *`,
-    [title, category, description, tech || [], result, color, url, image_url, order_index || 0, id]
-  )
-  if (!rows[0]) return res.status(404).json({ error: 'No encontrado' })
-  res.json(rows[0])
+  try {
+    const { id } = req.params
+    const { title, category, description, tech, result, color, url, image_url, order_index } = req.body
+    const { rows } = await pool.query(
+      `UPDATE projects SET title=$1, category=$2, description=$3, tech=$4, result=$5,
+       color=$6, url=$7, image_url=$8, order_index=$9 WHERE id=$10 RETURNING *`,
+      [title, category, description, tech || [], result, color, url, image_url, order_index || 0, id]
+    )
+    if (!rows[0]) return res.status(404).json({ error: 'No encontrado' })
+    res.json(rows[0])
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 app.delete('/api/projects/:id', async (req, res) => {
-  await pool.query('DELETE FROM projects WHERE id = $1', [req.params.id])
-  res.status(204).end()
+  try {
+    await pool.query('DELETE FROM projects WHERE id = $1', [req.params.id])
+    res.status(204).end()
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 // ── Upload imagen ─────────────────────────────────────────────────

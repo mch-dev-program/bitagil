@@ -54,7 +54,7 @@ function ProjectModal({ project, onClose, onSaved }) {
         // Step 2: upload image with the real UUID, then update
         if (imageFile) {
           const image_url = await uploadImage(imageFile)
-          const updated = await updateProject(created.id, { image_url })
+          const updated = await updateProject(created.id, { ...payload, image_url })
           onSaved({ ...created, ...updated })
         } else {
           onSaved(created)
