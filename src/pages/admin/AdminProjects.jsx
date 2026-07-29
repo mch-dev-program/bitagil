@@ -38,6 +38,10 @@ function ProjectModal({ project, onClose, onSaved }) {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    if (!form.title.trim()) {
+      setError('El título es obligatorio.')
+      return
+    }
     setError('')
     setSaving(true)
     try {

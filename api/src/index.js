@@ -40,6 +40,7 @@ app.get('/api/projects', async (req, res) => {
 
 app.post('/api/projects', async (req, res) => {
   try {
+    console.log('POST /api/projects body:', JSON.stringify(req.body))
     const { title, category, description, tech, result, color, url, image_url, order_index } = req.body
     const { rows } = await pool.query(
       `INSERT INTO projects (title, category, description, tech, result, color, url, image_url, order_index)
